@@ -99,20 +99,25 @@ module.exports = function(grunt) {
     var json = {}, fragment;
 
     globals.forEach(function (global) {
-      if (!grunt.file.exists(global)) {
-        grunt.log.error("JSON file " + global + " not found.");
+      if (grunt.util.kindOf(global) === 'object') {
+        fragment = global;
+      } else {
+        if (!grunt.file.exists(global)) {
+          grunt.log.error("JSON file " + global + " not found.");
+        }
+        else {
+          try {
+            fragment = grunt.file.readJSON(global);
+          }
+          catch (e) {
+            grunt.fail.warn(e);
+          }
+        }
       }
-      else {
-        try {
-          fragment = grunt.file.readJSON(global);
-        }
-        catch (e) {
-          grunt.fail.warn(e);
-        }
+      if (typeof fragment === 'object'){
         _merge(json, fragment);
       }
     });
-
 
     if (typeof source === 'object') {
       _merge(json, source);
