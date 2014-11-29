@@ -13,10 +13,6 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
 
-    cfg: {
-      message: 'templated message'
-    },
-
     jshint: {
       all: [
         'Gruntfile.js',
@@ -103,7 +99,7 @@ module.exports = function(grunt) {
           'test/globals/textspec.json',
           {
             textspec: {
-              "ps": "P.S. from Gruntfile.js: <%= cfg.message %>"
+              "ps": "P.S. from Gruntfile.js"
             }
           }
         ]

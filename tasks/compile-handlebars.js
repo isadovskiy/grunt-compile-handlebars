@@ -104,6 +104,7 @@ module.exports = function(grunt) {
       } else {
         if (!grunt.file.exists(global)) {
           grunt.log.error("JSON file " + global + " not found.");
+          return;
         }
         else {
           try {
@@ -111,12 +112,11 @@ module.exports = function(grunt) {
           }
           catch (e) {
             grunt.fail.warn(e);
+            return;
           }
         }
       }
-      if (typeof fragment === 'object'){
-        _merge(json, fragment);
-      }
+      _merge(json, fragment);
     });
 
     if (typeof source === 'object') {
