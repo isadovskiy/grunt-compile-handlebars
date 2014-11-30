@@ -87,7 +87,12 @@ Heres a few of the ways you can use it
       partials: 'test/fixtures/deep/shared/**/*.handlebars',
       globals: [
         'test/globals/info.json',
-        'test/globals/textspec.json'
+        'test/globals/textspec.json',
+        {
+          "textspec": {
+            "ps": "P.S. from Gruntfile.js"
+          }
+        }
       ]
     },
     customHandlebars: {
@@ -109,9 +114,10 @@ Unless otherwise noted, all configurable values can be represented as
 __`template`__ - The template fed to handlebars. In addition to the normal configurable values, it can also be an inline string representation of a template (e.g. raw html and handlebars).
 
 __`preHTML`__ - Static text to be inserted before the compiled template
+
 __`postHTML`__ - Static text to be inserted after the compiled template
 
-__`templateData` ~~ The data being fed to compiled template, in addition to the normal configurable values, this can be
+__`templateData`__ - The data being fed to compiled template, in addition to the normal configurable values, this can be
 * an inline string representation of a data (I don't know why you would do that though, when you can do...)
 * an inline JSON representation of a data
 
@@ -120,8 +126,10 @@ __`output`__ - the file(s) that handlebars saves the files to. This can be
 * a string representing the path to a [globbed representation](http://gruntjs.com/api/grunt.file#globbing-patterns) of the files.
 * an array of literal paths, globbed paths, or a combination of the two
 
-__`globals`__ - globals that can be included, useful for when you have template specific data, but want some data available to all templates
+__`globals`__ - globals that can be included, useful for when you have template specific data, but want some data available to all templates. It's an array, which items (in addition to the normal configurable values) can be an inline JSON representations of a data
+
 __`helpers`__ - handlebars helpers
+
 __`partials`__ - handlebars partials
 
 __`registerFullPath`__ - normally, helpers and partials are registered under their basename, rather than their path (e.g. partial at `partials/deep/awesomePartial.handlebars` is registered as `{{> awesomePartial}}`). When set to `true`, helpers and partials are registered under their full paths (e.g. {{> partials/deep/awesomePartial}}), to prevent clobbering after resolving globbed values.
@@ -170,6 +178,7 @@ the output would be `./foo/bar.html` and `./foo/baz.html`
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 0.7.9 - Igor - add support for inline JSON in `globals` section, update README
  * 0.7.8 - Eli - add `outputInInput` setting to send outputted files back to their handlebars directory
  * 0.7.7 - Uzi - swap out `JSON.parse` for `alce.parse`, allowing for (technically invalid) single quoted json
  * 0.7.6 - Kristofferson - explicitly check that `isGlob` is undefined, preventing a false negative on empty strings
